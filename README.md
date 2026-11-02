@@ -4,7 +4,7 @@
 
 ## Contexte
 
-✏️ *En cinq à huit phrases : qui utilise l'outil (son métier, son geste professionnel), son besoin, ce qu'il saisit, ce que le programme lui affiche, ce que l'outil ne fait pas.*
+L'outil est utilisé par l'assistant d'une pépinière pédagogique. Il désire faire un inventaire structé qui lui permettra de retrouver une espèce, lire son groupe botanique et voir la quantité de plants disponible pour cette espèce. L'outil renvoie le nombre total de plants, le nombre d'espèce et de plants par groupe botanique, et un nouveau tableau avec les espèces dont le nombre de plant est inférieur ou égal à 10. l'outil n'observe pas les étiquettes, les photos ou les specimens pour réperer un organe végétatif et un organe reproducteur.
 
 ## Prérequis et lancement
 
