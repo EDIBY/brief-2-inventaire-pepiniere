@@ -33,6 +33,8 @@ Sous PowerShell, si `npm` est bloqué : `npm.cmd test`.
 - [ ] Bonus : tri décroissant, groupe le plus fourni
 
 ## Données
+Fichier : donnees/plants.json
+Nombre de lignes : 72 lignes 
 
 ✏️ *Le fichier, le nombre de lignes, les champs (voir [docs/dictionnaire-donnees.md](docs/dictionnaire-donnees.md)), l'unité. Rappelez qu'elles sont fictives et que les groupes sont fournis par le coach.*
 
