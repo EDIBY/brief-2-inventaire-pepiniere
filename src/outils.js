@@ -6,7 +6,7 @@
 // Exemples : versNombre('5,2') → 5.2 · versNombre('3 000') → 3000
 //            versNombre('abc') → NaN · versNombre('') → NaN
 // Attention : Number('') vaut 0, c'est pourquoi on utilise cette fonction.
-export function versNombre(texte) {
+export function versNombre(texte){
   const nettoye = String(texte ?? '').replace(/\s/g, '').replace(',', '.');
   if (nettoye === '') {
     return NaN;
