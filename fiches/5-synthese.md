@@ -9,6 +9,7 @@ Aucune de ces fonctions ne modifie l'inventaire reçu.
 Renvoie le nombre total de plants : `240` avec les données de départ, `0` pour un inventaire vide.
 
 **À vous.** Piste : avec quelle valeur commence la variable qui accumule ?
+Avec 0.
 
 ## 2. `syntheseParGroupe(plants)`
 
