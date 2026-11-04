@@ -15,14 +15,14 @@
 | Bonus | 03-11-2026 | 04-11-2026 | |
 
 **Blocages** (le message exact, ce que j'ai essayé, la solution) : 
-Message exact : 
+**Message exact** : 
 ✔ extension : enregistrerJson écrit un JSON indenté de 2 espaces (8.1645ms)
 ✖ extension : chargerJson relit ce qu’enregistrerJson a écrit (2.4458ms)
 ✖ extension : chargerJson laisse remonter l’erreur « fichier absent » (ENOENT) (2.8084ms)
 ℹ Error: Test "extension : chargerJson relit ce qu’enregistrerJson a écrit" at test\stockage.test.js:23:1 generated asynchronous activity after the test ended. This activity created the error "ReferenceError: error is not defined" and would have caused the test to fail, but instead triggered an unhandledRejection event.
 ℹ Error: Test "extension : chargerJson laisse remonter l’erreur « fichier absent » (ENOENT)" at test\stockage.test.js:30:1 generated asynchronous activity after the test ended. This activity created the error "ReferenceError: error is not defined" and would have caused the test to fail, but instead triggered an unhandledRejection event.
 
-Ce que j'ai essayé : // Lire et écrire les données dans un fichier JSON. À coder EN PREMIER : le menu en a besoin pour démarrer.
+**Ce que j'ai essayé** : // Lire et écrire les données dans un fichier JSON. À coder EN PREMIER : le menu en a besoin pour démarrer.
 // Fiche : fiches/2-donnees-json.md · Vérifier : npm run test:stockage
 import { readFile, writeFile } from 'node:fs/promises';
 import { join } from "node:path";
@@ -52,7 +52,7 @@ export async function enregistrerJson(chemin, enregistrements) {
   const textJson = JSON.stringify(enregistrements, null, 2);
 }
 
-Solution : 
+**Solution** : 
 // Lire et écrire les données dans un fichier JSON. À coder EN PREMIER : le menu en a besoin pour démarrer.
 // Fiche : fiches/2-donnees-json.md · Vérifier : npm run test:stockage
 import { readFile, writeFile } from 'node:fs/promises';
@@ -74,7 +74,7 @@ export async function enregistrerJson(chemin, enregistrements) {
   return await writeFile(chemin, tableauE, `utf8`)
 }
 
-Message exact : ✔ formaterPlant écrit un plant sur une ligne (1.5505ms)
+**Message exact** : ✔ formaterPlant écrit un plant sur une ligne (1.5505ms)
 ✔ listerPlants écrit une ligne par plant (0.3854ms)
 ✔ listerPlants affiche un message si l’inventaire est vide (0.173ms)
 ✖ trouverParId : la recherche N09 affiche pin, gymnosperme, 8 plants (0.4145ms)
@@ -96,7 +96,7 @@ Message exact : ✔ formaterPlant écrit un plant sur une ligne (1.5505ms)
 
 ✖ failing tests:
 
-Ce que j'ai essayé : 
+**Ce que j'ai essayé** : 
 import { estDateValide, versNombre } from './outils.js';
 
 // Liste fermée des groupes botaniques acceptés, fournie et validée par le coach agronomie.
@@ -183,5 +183,141 @@ export function ajouterPlant(plants, saisie) {
   throw new Error('TODO : coder ajouterPlant dans src/registre.js');
 }
 
-Solution : 
+**Solution** : 
+import { estDateValide, versNombre } from './outils.js';
 
+// Liste fermée des groupes botaniques acceptés, fournie et validée par le coach agronomie.
+export const GROUPES = ['angiosperme', 'gymnosperme'];
+
+// Renvoie une ligne de texte qui décrit le plant.
+// Exemple : 'N09 | pin | gymnosperme | 8 plants | 2026-10-24'
+export function formaterPlant(plant) {
+  return `${plant.id} | ${plant.nomCommun} | ${plant.groupe} | ${plant.nombrePlants} plants | ${plant.dateReleve}`
+  throw new Error('TODO : coder formaterPlant dans src/registre.js');
+}
+
+
+// Renvoie un texte avec un plant par ligne (lignes séparées par '\n'),
+// ou 'Aucun plant enregistré.' si la liste est vide.
+export function listerPlants(plants) {
+  if(plants.length === 0){
+    return `Aucun plant enregistré.`
+  }
+  return plants.map(formaterPlant).join('\n');
+  throw new Error('TODO : coder listerPlants dans src/registre.js');
+}
+
+// Renvoie le plant qui a ce code (identifiant), ou undefined s'il n'existe pas.
+export function trouverParId(plants, id) {
+  return plants.find((plant) => plant.id===id)
+  throw new Error('TODO : coder trouverParId dans src/registre.js');
+}
+
+// Contrôle une saisie AVANT de l'ajouter. Tous les champs arrivent sous forme de TEXTE :
+// { id: 'N11', nomCommun: 'papayer', groupe: 'angiosperme', nombrePlants: '15', dateReleve: '2026-10-27' }
+// Renvoie un tableau de messages d'erreur, un message par règle non respectée ;
+// un tableau vide signifie « saisie valide ».
+// Règles : id obligatoire et unique · nomCommun obligatoire · groupe présent dans GROUPES
+// · nombrePlants nombre ENTIER positif ou nul · dateReleve réelle au format AAAA-MM-JJ.
+export function verifierPlant(saisie, plants) {
+  const erreurs = []
+  const idN = saisie.id
+  if(!idN || idN.trim()===''){
+    erreurs.push('id obligatoire');
+  }
+  const idExiste = plants.some((plant) => plant.id === idN);
+    if(idExiste){
+      erreurs.push(`id unique`)
+  }
+  const nomCommunN = saisie.nomCommun
+  if(!nomCommunN || nomCommunN.trim()===''){
+    erreurs.push('nomCommun obligatoire')
+  }
+  const groupeN = saisie.groupe;
+  if(!GROUPES.includes(groupeN)){
+    erreurs.push('groupe présent dans GROUPES')
+  }
+  const nombrePlantsN = versNombre(saisie.nombrePlants);
+  if(!Number.isInteger(nombrePlantsN) || nombrePlantsN <0){
+    erreurs.push('nombrePlants nombre ENTIER positif ou nul')
+  }
+  const dateN= saisie.dateReleve
+  if(!estDateValide(dateN)){
+    erreurs.push('dateReleve réelle au format AAAA-MM-JJ')
+  }
+  return erreurs
+}
+
+// Fabrique le plant à enregistrer à partir d'une saisie VALIDE : nombrePlants devient un nombre.
+export function creerPlant(saisie) {
+  const nombreplants = versNombre(saisie.nombrePlants);
+  return{
+    id: saisie.id,
+    nomCommun: saisie.nomCommun,
+    groupe : saisie.groupe,
+    nombrePlants : nombreplants,
+    dateReleve: saisie.dateReleve,
+  }
+}
+
+// Ajoute la saisie à l'inventaire si elle est valide (verifierPlant, puis creerPlant).
+// Renvoie les erreurs : [] si le plant a été ajouté ; sinon les messages, et rien n'est ajouté.
+export function ajouterPlant(plants, saisie) {
+  const erreurs = verifierPlant(saisie, plants);
+  if(erreurs.length > 0){
+    return erreurs;
+  }
+  const nouveauplant = creerPlant(saisie);
+  plants.push(nouveauplant);
+  return [];
+  }
+
+
+**Message de Blocage** : 
+// Rechercher et trier les plants.
+// Fiche : fiches/4-rechercher-trier.md · Vérifier : npm run test:recherche
+
+// Renvoie un NOUVEAU tableau avec les plants dont le nom commun CONTIENT le texte cherché,
+// sans tenir compte des majuscules : 'PALM' trouve 'palmier à huile'. Éventuellement vide.
+export function rechercherParNom(plants, texte) {
+  const caratere = texte.toLowerCase();
+  return plants.filter((nom) => nom.nomCommun.toLowerCase().includes(caratere));
+}
+
+// Renvoie un NOUVEAU tableau avec les plants de ce groupe botanique (éventuellement vide).
+export function filtrerParGroupe(plants, groupe) {
+  return plants.filter((G) => G.groupe === groupe);
+}
+
+// Renvoie une COPIE triée par nombre de plants croissant, avec un comparateur numérique.
+// Deux plants de même nombre gardent leur ordre d'origine. Le tableau reçu ne doit pas changer d'ordre.
+export function trierParNombrePlants(plants) {
+  const copie = [...plants];
+  return copie.sort((d, e) => d.ParNombrePlants - e.ParNombrePlants)
+}
+
+**Ce que j'ai essayé** :
+// Rechercher et trier les plants.
+// Fiche : fiches/4-rechercher-trier.md · Vérifier : npm run test:recherche
+
+// Renvoie un NOUVEAU tableau avec les plants dont le nom commun CONTIENT le texte cherché,
+// sans tenir compte des majuscules : 'PALM' trouve 'palmier à huile'. Éventuellement vide.
+export function rechercherParNom(plants, texte) {
+  const caratere = texte.toLowerCase();
+  return plants.filter((nom) => nom.nomCommun.toLowerCase().includes(caratere));
+}
+
+// Renvoie un NOUVEAU tableau avec les plants de ce groupe botanique (éventuellement vide).
+export function filtrerParGroupe(plants, groupe) {
+  return plants.filter((G) => G.groupe === groupe);
+}
+
+// Renvoie une COPIE triée par nombre de plants croissant, avec un comparateur numérique.
+// Deux plants de même nombre gardent leur ordre d'origine. Le tableau reçu ne doit pas changer d'ordre.
+export function trierParNombrePlants(plants) {
+  const copie = [...plants];
+  return copie.sort((d, e) => d.ParNombrePlants - e.ParNombrePlants)
+}
+
+**Solution** : 
+remplacer dans return copie Parnombresplants pat nombrePlants              
