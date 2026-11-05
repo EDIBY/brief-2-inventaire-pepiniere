@@ -21,15 +21,13 @@ Sous PowerShell, si `npm` est bloqué : `npm.cmd test`.
 
 ## Fonctionnalités
 
-✏️ *Cochez seulement ce qui marche : `- [x]`.*
-
 - [X] Données lues et enregistrées dans `donnees/plants.json`
 - [X] Ajouter un plant, saisies invalides refusées sans arrêter le programme
 - [X] Lister l'inventaire, message si l'inventaire est vide
 - [X] Rechercher par code ou par nom ; filtrer par groupe botanique
 - [X] Trier par nombre de plants
 - [X] Synthèse : stock total, espèces et plants par groupe, espèce la plus abondante, stocks faibles (≤ 10 plants)
-- [ ] Bonus : supprimer et modifier un plant (choix 6 et 7)
+- [X] Bonus : supprimer et modifier un plant (choix 6 et 7)
 - [ ] Bonus : tri décroissant, groupe le plus fourni
 
 ## Données
@@ -48,4 +46,4 @@ Nombre de lignes : 72 lignes
 
 ## Auteur
 
-✏️ *Prénom NOM, compte GitHub. Entraide : YOBOUE Grace Danielle
+Ebenezer François Konan DIBY , EDIBY. Entraide : YOBOUE Grace Danielle

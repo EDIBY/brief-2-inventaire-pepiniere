@@ -10,8 +10,8 @@
 | `nombrePlants` |nombre de plants | entier | positif ou 0 | - | `8` |
 |`dateReleve`| date d'ajout des information à la base de donnée | date | Année-mois-jour | - |`2026-10-20`|
 
-**Listes de valeurs autorisées** : id : écrit en majuscule  (`N01`,`N02`, `N03`, `N04`, `N09`, `N10`)
-nomCommun : nom vernaculaire écrit en miniscule (`cacao`, `maïs`, `riz`, `tomate`, `citronnier`, `pin`, `cycas`)
+**Listes de valeurs autorisées** : id : écrit en majuscule  (`N01`, `N09`, `N10`)
+nomCommun : nom vernaculaire écrit en miniscule (`cacao`, `maïs`, `pin`, `cycas`)
 groupe(`angiosperme`,`gymnosperme`)
 nombrePlants( valeur minimal = 0, valeur maximal: pas de limite, pas de valeur négatif ou décimal)
 date (suivant la notation anneé-mois-jour)
