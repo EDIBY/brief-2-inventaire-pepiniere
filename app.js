@@ -56,30 +56,35 @@ async function main() {
         saisie.id = await demander('Code du plant :');
           if(saisie.id === null) {
             console.log('Ajout annulé.');
+            choix = null;
             break;
           }
 
           saisie.nomCommun = await demander('Nom commun :');
           if(saisie.nomCommun === null) {
             console.log('Ajout annulé.');
+            choix = null;
             break;
           } 
 
           saisie.groupe = await demander('Groupe botanique (angiosperme ou gymnosperme) :');
           if(saisie.groupe === null) {
             console.log('Ajout annulé.');
+            choix = null;
             break;
           }
 
           saisie.nombrePlants = await demander('Nombre de plants (entier) :');
           if(saisie.nombrePlants === null) {
             console.log('Ajout annulé.');
+            choix = null;
             break;
           }
 
           saisie.dateReleve = await demander('Date de releve AAAA-MM-JJ :');
           if(saisie.dateReleve === null) {
             console.log('Ajout annulé.');
+            choix = null;
             break;
           }
 
