@@ -9,7 +9,6 @@ export const GROUPES = ['angiosperme', 'gymnosperme'];
 // Exemple : 'N09 | pin | gymnosperme | 8 plants | 2026-10-24'
 export function formaterPlant(plant) {
   return `${plant.id} | ${plant.nomCommun} | ${plant.groupe} | ${plant.nombrePlants} plants | ${plant.dateReleve}`
-  throw new Error('TODO : coder formaterPlant dans src/registre.js');
 }
 
 
@@ -20,13 +19,11 @@ export function listerPlants(plants) {
     return `Aucun plant enregistré.`
   }
   return plants.map(formaterPlant).join('\n');
-  throw new Error('TODO : coder listerPlants dans src/registre.js');
 }
 
 // Renvoie le plant qui a ce code (identifiant), ou undefined s'il n'existe pas.
 export function trouverParId(plants, id) {
   return plants.find((plant) => plant.id===id)
-  throw new Error('TODO : coder trouverParId dans src/registre.js');
 }
 
 // Contrôle une saisie AVANT de l'ajouter. Tous les champs arrivent sous forme de TEXTE :
@@ -55,7 +52,7 @@ export function verifierPlant(saisie, plants) {
   }
   const nombrePlantsN = versNombre(saisie.nombrePlants);
   if(!Number.isInteger(nombrePlantsN) || nombrePlantsN <0){
-    erreurs.push('nombrePlants nombre ENTIER positif ou nul')
+    erreurs.push('Le nombre de plants doit être un entier positif ou nul')
   }
   const dateN= saisie.dateReleve
   if(!estDateValide(dateN)){

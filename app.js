@@ -12,8 +12,196 @@ const FICHIER_DONNEES = 'donnees/plants.json';
 
 async function main() {
   ouvrirSaisie();
-  console.log("À compléter : écrivez le menu dans app.js (fiches/3-ajouter-lister.md).");
-  fermerSaisie();
+  console.log(`
+      ==============================================
+              INVENTAIRE DE LA PEPINIERE 
+              Pépinière pédagogique
+      ==============================================
+
+    `);
+  let plants = [];
+
+  try{
+    plants = await chargerJson(FICHIER_DONNEES);
+    console.log(`${plants.length} espèce(s) chargée(s) depuis ${FICHIER_DONNEES}.`);
+  }
+  catch (erreur){
+    console.log(`Impossible de lire ${FICHIER_DONNEES} : ${erreur.message}. L'inventaire demarre vide`);
+  }
+  let choix = '';
+
+  while (choix !=='0' && choix !== null){
+    console.log(`
+      ------------------- Menu -----------------
+      1. Ajouter un plant
+      2. Lister l'inventaire
+      3. Rechercher (code, nom, groupe)
+      4. Trier (nombre de plants)
+      5. Synthèse des quantités
+      0. Quitter
+      `);
+
+      choix = await demander(`Votre choix :`);
+      if(choix === null) {
+         break;
+        }
+  try{
+    switch(choix){
+      case '1' :
+        console.log('------ Ajouter un plan ------')
+        console.log(`Groupes autorisés : ${GROUPES.join(' ou ')}`);
+
+        const saisie = {};
+
+        saisie.id = await demander('Code du plant :');
+          if(saisie.id === null) {
+            console.log('Ajout annulé.');
+            break;
+          }
+
+          saisie.nomCommun = await demander('Nom commun :');
+          if(saisie.nomCommun === null) {
+            console.log('Ajout annulé.');
+            break;
+          } 
+
+          saisie.groupe = await demander('Groupe botanique (angiosperme ou gymnosperme) :');
+          if(saisie.groupe === null) {
+            console.log('Ajout annulé.');
+            break;
+          }
+
+          saisie.nombrePlants = await demander('Nombre de plants (entier) :');
+          if(saisie.nombrePlants === null) {
+            console.log('Ajout annulé.');
+            break;
+          }
+
+          saisie.dateReleve = await demander('Date de releve AAAA-MM-JJ :');
+          if(saisie.dateReleve === null) {
+            console.log('Ajout annulé.');
+            break;
+          }
+
+        //Normaliser les informations
+        saisie.id = saisie.id.toUpperCase();
+        saisie.nomCommun = saisie.nomCommun.toLowerCase();
+        saisie.groupe = saisie.groupe.toLowerCase();
+
+        // Vérifier et ajouter le plant
+        const erreurs = ajouterPlant(plants, saisie);
+
+        if(erreurs.length > 0){
+          console.log(erreurs.join('\n'));
+        }
+        else{
+          await enregistrerJson(FICHIER_DONNEES, plants);
+          console.log(`Plant ${saisie.id} ajouté. L'inventaire compte ${plants.length} espèce(s).`);
+        }
+        break;
+
+      case '2' :
+        console.log(`--- Inventaire (${plants.length} espèce(s)) ---`);
+        console.log(listerPlants(plants));
+        break;
+
+      case '3':
+        console.log('1. Trouver par Id');
+        console.log('2. Rechercher par Nom');
+        console.log('3. Filtrer par groupe');
+        
+        const critere = await demander('Votre choix :');
+
+        if(critere === null){
+          choix = null;
+          break;
+        }
+
+        if(critere === '1'){
+          const id = await demander('Code du plant :');
+
+          if(id === null){
+            choix = null;
+            break;
+          }
+
+          const resultat = trouverParId(plants, id.toUpperCase());
+
+          console.log(resultat ? formaterPlant(resultat): 'Aucun plant trouvé');
+        }
+        else if(critere === '2'){
+          const nom = await demander('Nom du plant :');
+
+          if(nom === null){
+            choix = null;
+            break;
+          }
+          const resultat = rechercherParNom(plants, nom);
+
+          console.log(resultat.map(formaterPlant).join('\n') || 'Aucun plant trouvé');
+        }
+        else if(critere==='3'){
+          const groupe = await demander('Groupe botanique du plant :');
+
+          if(groupe === null){
+            choix = null;
+            break;
+          }
+          const resultat = filtrerParGroupe(plants, groupe.toLowerCase());
+           console.log(resultat.map(formaterPlant).join('\n') || 'Aucun plant trouvé');
+        }
+        else{
+          console.log('Critère inconnu.');
+        }
+        break;
+
+      case '4' :
+          console.log(trierParNombrePlants(plants).map(formaterPlant).join('\n') || 'Aucun plant enregistré');
+          break;
+
+      case '5' :
+        console.log(`1. Nombre d'espèces : ${plants.length}`);
+        console.log(`2. Nombre total de plants : ${totalPlants(plants)}`);
+        const groupes =syntheseParGroupe(plants);
+        console.log('3. Synthèse par groupe botanique : ');
+        for(const groupe in groupes){
+          console.log(`${groupe} : ${groupes[groupe].especes} espèce(s), ${groupes[groupe].plants} plants`);
+        }
+        console.log('4. Synthèse des espèces :');
+        const abondante = especeLaPlusAbondante(plants);
+        if(abondante === null){
+          console.log('Aucune espèce abondante');
+        }
+        else{
+          console.log(`Espèce la plus abondante : ${formaterPlant(abondante)}`);
+        }
+        const faibles = stocksFaibles(plants, SEUIL_STOCK_FAIBLE);
+        console.log(`Stocks faibles (<= ${SEUIL_STOCK_FAIBLE} plants) : ${faibles.length}`);
+        for(const plant of faibles){
+          console.log(formaterPlant(plant));
+        }
+        break;
+      case '0' :
+        console.log('Au revoir !');
+        break;
+
+      default:
+        console.log(`Choix inconnu. Tapez un chiffre du menu`)
+    }
+  }
+  catch(erreur){
+    if(erreur.message.startsWith('TODO')){
+      console.log(`À compléter : ${erreur.message}`);
+    }
+    else{
+      console.log(`Erreur inatendue : ${erreur.message}`);
+    }
+    
+  }
+  finally {
+    fermerSaisie(); 
+  }
+  } 
 }
 
 main();

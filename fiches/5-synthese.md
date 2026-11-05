@@ -42,7 +42,10 @@ Renvoie un **nouveau** tableau des plants dont le nombre est **inférieur ou ég
 
 Renvoie le plant qui a le plus de plants (N04, tomate, 50), le premier en cas d'égalité, ou `null` pour un inventaire vide.
 
-**À vous** : écrivez d'abord l'algorithme et suivez-le à la main sur un exemple. Pistes : avec quelle valeur commencer ? Une quantité peut valoir `0`. « Plus grand » ou « plus grand ou égal » : lequel garde le premier ?
+**À vous** : écrivez d'abord l'algorithme et suivez-le à la main sur un exemple. Pistes : avec quelle valeur commencer ?
+Je commence avec la valeur de la nombreplant du premier objet du tableau plants.
+ Une quantité peut valoir `0`. « Plus grand » ou « plus grand ou égal » : lequel garde le premier ?  Le « plus grand » garde le premier.
+
 
 ## 5. Le menu : choix 5 (`app.js`)
 

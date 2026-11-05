@@ -8,7 +8,7 @@
 | Fiche 2 : lire et écrire le JSON | 02-11-2026 | 03-11-2026 | https://github.com/EDIBY/brief-2-inventaire-pepiniere/tree/84a51028d6ce1b399dce32dcb9fb1b50c721abb1  |
 | Fiche 3 : ajouter et lister ; choix 1 et 2 ; erreurs | 03-11-2026 | 04-11-2026 | https://github.com/EDIBY/brief-2-inventaire-pepiniere/tree/43ba2a79efcfd6470d6ca773ea79d2fdf60d9e51 |
 | Fiche 4 : rechercher et trier ; choix 3 et 4 | 03-11-2026|04-2026 |https://github.com/EDIBY/brief-2-inventaire-pepiniere/tree/708ed75c52380d77d1f649a3643f18e44177f5f6 |
-| Fiche 5 : synthèse ; choix 5 |03-11-2026 | 04-11-2026| |
+| Fiche 5 : synthèse ; choix 5 |03-11-2026 | 04-11-2026| https://github.com/EDIBY/brief-2-inventaire-pepiniere/tree/8be656586d10648848841b354f1416ec36c80f45|
 | Tests par un camarade ; mes propres tests | 04-11-2026 | 05-11-2026 | |
 | Fiche agronomique ; README ; documents | 02-11-2026 | 03-11-2026 | |
 | Dépôt cloné et lancé ailleurs ; démonstration répétée |04-11-2026 | 05-11-2026 | |

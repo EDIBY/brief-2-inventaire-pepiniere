@@ -38,7 +38,11 @@ Codez les fonctions dans l'ordre : chacune sert aux suivantes. Les tests fournis
 Votre choix :
 ```
 
-Pistes : quelle boucle répète des instructions tant qu'une condition est vraie ? Quelle instruction choisit entre plusieurs cas selon une valeur ? Cherchez comment attraper une erreur. Écrivez d'abord le menu avec des actions vides, puis remplissez-les une à une.
+Pistes : quelle boucle répète des instructions tant qu'une condition est vraie ? 
+C'est la boucle while.
+ Quelle instruction choisit entre plusieurs cas selon une valeur ? 
+ L'instruction qui choisit entre plusieurs cas est switch.
+ Cherchez comment attraper une erreur. Écrivez d'abord le menu avec des actions vides, puis remplissez-les une à une.
 
 ## 1. `formaterPlant(plant)`
 
