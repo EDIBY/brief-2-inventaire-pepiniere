@@ -108,6 +108,7 @@ async function main() {
       case '2' :
         console.log(`--- Inventaire (${plants.length} espèce(s)) ---`);
         console.log(listerPlants(plants));
+        choix = null;
         break;
 
       case '3':
@@ -162,13 +163,18 @@ async function main() {
 
       case '4' :
           console.log(trierParNombrePlants(plants).map(formaterPlant).join('\n') || 'Aucun plant enregistré');
+          choix = '0';
           break;
 
       case '5' :
         console.log(`1. Nombre d'espèces : ${plants.length}`);
+
         console.log(`2. Nombre total de plants : ${totalPlants(plants)}`);
+
         const groupes =syntheseParGroupe(plants);
+
         console.log('3. Synthèse par groupe botanique : ');
+
         for(const groupe in groupes){
           console.log(`${groupe} : ${groupes[groupe].especes} espèce(s), ${groupes[groupe].plants} plants`);
         }
@@ -185,13 +191,15 @@ async function main() {
         for(const plant of faibles){
           console.log(formaterPlant(plant));
         }
+        choix = '0'
         break;
       case '0' :
         console.log('Au revoir !');
         break;
 
       default:
-        console.log(`Choix inconnu. Tapez un chiffre du menu`)
+        console.log(`Choix inconnu. Tapez un chiffre du menu.`);
+        choix = null;
     }
   }
   catch(erreur){
