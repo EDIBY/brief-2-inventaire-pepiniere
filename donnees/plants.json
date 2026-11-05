@@ -10,14 +10,7 @@
     "id": "N02",
     "nomCommun": "maïs",
     "groupe": "angiosperme",
-    "nombrePlants": 45,
-    "dateReleve": "2026-10-24"
-  },
-  {
-    "id": "N03",
-    "nomCommun": "riz",
-    "groupe": "angiosperme",
-    "nombrePlants": 20,
+    "nombrePlants": 60,
     "dateReleve": "2026-10-24"
   },
   {
@@ -67,6 +60,13 @@
     "nomCommun": "cycas",
     "groupe": "gymnosperme",
     "nombrePlants": 10,
+    "dateReleve": "2026-10-24"
+  },
+  {
+    "id": "N03",
+    "nomCommun": "riz",
+    "groupe": "angiosperme",
+    "nombrePlants": 20,
     "dateReleve": "2026-10-24"
   }
 ]

@@ -7,11 +7,13 @@ import { chargerJson, enregistrerJson } from './src/stockage.js';
 import { GROUPES, ajouterPlant, formaterPlant, listerPlants, trouverParId } from './src/registre.js';
 import { filtrerParGroupe, rechercherParNom, trierParNombrePlants } from './src/recherche.js';
 import { SEUIL_STOCK_FAIBLE, especeLaPlusAbondante, stocksFaibles, syntheseParGroupe, totalPlants } from './src/synthese.js';
+import { supprimerPlant, modifierPlant, trierParNombrePlantsDecroissant, groupeLePlusFourni } from './src/bonus.js';
 
 const FICHIER_DONNEES = 'donnees/plants.json';
 
 async function main() {
   ouvrirSaisie();
+  try{
   console.log(`
       ==============================================
               INVENTAIRE DE LA PEPINIERE 
@@ -38,6 +40,8 @@ async function main() {
       3. Rechercher (code, nom, groupe)
       4. Trier (nombre de plants)
       5. Synthèse des quantités
+      6. supprimer un plant
+      7. modifier un plant
       0. Quitter
       `);
 
@@ -47,8 +51,8 @@ async function main() {
         }
   try{
     switch(choix){
-      case '1' :
-        console.log('------ Ajouter un plan ------')
+      case '1' :{
+        console.log('------ Ajouter un plant ------')
         console.log(`Groupes autorisés : ${GROUPES.join(' ou ')}`);
 
         const saisie = {};
@@ -104,14 +108,14 @@ async function main() {
           console.log(`Plant ${saisie.id} ajouté. L'inventaire compte ${plants.length} espèce(s).`);
         }
         break;
+      }
 
       case '2' :
         console.log(`--- Inventaire (${plants.length} espèce(s)) ---`);
         console.log(listerPlants(plants));
-        choix = null;
         break;
 
-      case '3':
+      case '3':{
         console.log('1. Trouver par Id');
         console.log('2. Rechercher par Nom');
         console.log('3. Filtrer par groupe');
@@ -119,7 +123,7 @@ async function main() {
         const critere = await demander('Votre choix :');
 
         if(critere === null){
-          choix = null;
+          
           break;
         }
 
@@ -139,7 +143,7 @@ async function main() {
           const nom = await demander('Nom du plant :');
 
           if(nom === null){
-            choix = null;
+            
             break;
           }
           const resultat = rechercherParNom(plants, nom);
@@ -150,7 +154,7 @@ async function main() {
           const groupe = await demander('Groupe botanique du plant :');
 
           if(groupe === null){
-            choix = null;
+            
             break;
           }
           const resultat = filtrerParGroupe(plants, groupe.toLowerCase());
@@ -159,14 +163,28 @@ async function main() {
         else{
           console.log('Critère inconnu.');
         }
+      }
         break;
 
-      case '4' :
+      case '4' :{
+        console.log('1. Par nombre de plants croissant');
+        console.log('2. Par nombre de plants décroissant')
+        
+        const tri = await demander('Votre choix :');
+        if(tri === '1'){
           console.log(trierParNombrePlants(plants).map(formaterPlant).join('\n') || 'Aucun plant enregistré');
-          choix = '0';
-          break;
+      }
+       else if(tri === '2'){
+        console.log(trierParNombrePlantsDecroissant(plants).map(formaterPlant).join('\n') || 'Aucun plant enregistré');
+      }
+      else if(tri !== null){
+        console.log('Choix de tri inconnu.')
+      }
+  
+    }
+        break;
 
-      case '5' :
+      case '5' :{
         console.log(`1. Nombre d'espèces : ${plants.length}`);
 
         console.log(`2. Nombre total de plants : ${totalPlants(plants)}`);
@@ -177,6 +195,13 @@ async function main() {
 
         for(const groupe in groupes){
           console.log(`${groupe} : ${groupes[groupe].especes} espèce(s), ${groupes[groupe].plants} plants`);
+        }
+        const groupefourni = groupeLePlusFourni(plants);
+        if(groupefourni === null){
+          console.log('Aucun groupe est plus fourni')
+        }
+        else {
+          console.log(`Groupe le plus fourni : ${groupefourni.groupe} (${groupefourni.plants} plants)`);
         }
         console.log('4. Synthèse des espèces :');
         const abondante = especeLaPlusAbondante(plants);
@@ -191,8 +216,60 @@ async function main() {
         for(const plant of faibles){
           console.log(formaterPlant(plant));
         }
-        choix = '0'
+      }
         break;
+        
+      case '6' : {
+        const id =await demander('Identifiant : ');
+        if(id === null){
+          choix = null;
+          break;
+        }
+        const resultat = supprimerPlant(plants, id.toUpperCase());
+        if(resultat === undefined){
+          console.log(`Plant ${id.toUpperCase()} introuvable`);
+        }
+        else{
+          await enregistrerJson(FICHIER_DONNEES, plants);
+          console.log(`Plant ${resultat.id} supprimé. L'inventaire compte ${plants.length} espèce(s).`);
+        }
+      }
+     
+        break;
+      
+      case '7' :{
+        const id = await demander ('Identifiant : ');
+        if(id === null){
+          choix = null;
+          break;
+        }
+        const champ = await demander('Champ à modifier (nomCommun, groupe, nombrePlants, dateReleve) : ');
+
+         if(champ === null) {
+            choix = null;
+            break;
+          }
+          const valeur = await demander('Nouvelle valeur : ');
+
+          if(valeur === null){
+            choix = null;
+            break;
+          }
+          const erreurs = modifierPlant(plants, id.toUpperCase(), champ, valeur);
+
+          if(erreurs.length > 0) {
+            console.log('Modification refusé :');
+            for(const erreur of erreurs){
+              console.log(`  -${erreur}`);
+            }
+          }
+          else{
+            await enregistrerJson(FICHIER_DONNEES, plants);
+            console.log(`Plant ${id.toUpperCase()} modifié.`);
+          }
+          break;
+        }
+      
       case '0' :
         console.log('Au revoir !');
         break;
@@ -211,10 +288,12 @@ async function main() {
     }
     
   }
-  finally {
-    fermerSaisie(); 
-  }
+  
+   } 
   } 
+finally{
+  fermersaisie();
+}
 }
 
 main();

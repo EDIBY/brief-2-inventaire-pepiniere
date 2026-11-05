@@ -20,7 +20,6 @@ Ajoutez au menu `6. Supprimer un plant` et `7. Modifier un plant`, et importez v
 | `6` | `Identifiant : ` (en majuscules) | `Plant N03 supprimé. L'inventaire compte 9 espèce(s).` ou `Plant N99 introuvable.` |
 | `7` | `Identifiant : ` (en majuscules), `Champ à modifier (nomCommun, groupe, nombrePlants, dateReleve) : `, `Nouvelle valeur : ` | `Plant N03 modifié.` ou `Modification refusée :` puis une erreur par ligne (`  - …`) |
 
-Après une suppression ou une modification réussie, enregistrez l'inventaire dans `donnees/plants.json`.
 
 Deux ajouts d'affichage, comptés dans ce point :
 
