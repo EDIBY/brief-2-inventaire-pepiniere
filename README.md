@@ -37,7 +37,7 @@ Nombre de lignes : 72 lignes
 ✏️ *Le fichier, le nombre de lignes, les champs (voir [docs/dictionnaire-donnees.md](docs/dictionnaire-donnees.md)), l'unité. Rappelez qu'elles sont fictives et que les groupes sont fournis par le coach.*
 
 ## Limites
-
+Le nomCommun ne répère pas les clones 
 ✏️ *Au moins trois. Par exemple : le seuil de 10 plants est un repère de suivi, pas une recommandation de production.*
 
 ## Documents
