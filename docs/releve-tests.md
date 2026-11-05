@@ -13,11 +13,11 @@ Les resultats correspondent aux tests.
 
 | Action | Attendu | Obtenu | Testeur |
 | --- | --- | --- | --- |
-| ✏️ | | | |
-| ✏️ | | | |
-| ✏️ | | | |
-| ✏️ | | | |
-| ✏️ | | | |
-| ✏️ | | | |
-
+|Calcul du stock total  |240 |240 | Koffi Astrid Malory Batiyé|
+|Total espèces angiosperme| 8|8 |Koffi Astrid Malory Batiyé |
+|Total plants angiosperme  |222 |222 |Koffi Astrid Malory Batiyé |
+|Total espèces gymnosperme |2 |2 |Koffi Astrid Malory Batiyé |
+|Total plants gymnosperme | 18|18 |Koffi Astrid Malory Batiyé |
+|Stock faible  |N09;N10 | |Koffi Astrid Malory Batiyé |
+|Espèce la plus abondante|50 plants|plants|Koffi Astrid Malory Batiyé|
 **Sur un autre poste** (`git clone`, `node app.js`, `npm test`, en suivant le README) : ✏️
