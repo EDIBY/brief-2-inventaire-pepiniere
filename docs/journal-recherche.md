@@ -4,6 +4,5 @@
 
 | Ce que je cherchais | Où | Ce que j'ai compris | Utilisé dans |
 | --- | --- | --- | --- |
-| ✏️ | | | |
-| ✏️ | | | |
-| ✏️ | | | |
+| Les fonction fléchées | ChatGpt | Comment écrire une fonction fléchée ces syntaxes  | bonus.js |
+| Les objets | ChatGpt  |comment accéder aux informations avec avec plant.id, plant.nomCommun| app.js |

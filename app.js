@@ -218,7 +218,7 @@ async function main() {
         }
       }
         break;
-        
+
       case '6' : {
         const id =await demander('Identifiant : ');
         if(id === null){
@@ -292,7 +292,7 @@ async function main() {
    } 
   } 
 finally{
-  fermersaisie();
+  fermerSaisie();
 }
 }
 
